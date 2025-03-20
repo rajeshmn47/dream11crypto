@@ -227,7 +227,7 @@ export function ContestDetail() {
       }
       else if (joinTeam) {
         const data = await API.get(
-          `${URL}/joincontest/${contest?._id}?teamid=${selectedTeam?._id}`,
+          `${URL}/cryptocontest/joincontest/${contest?._id}?teamid=${selectedTeam?._id}`,
         );
         setSelectedTeam(null);
         setSwitchTeam(null);

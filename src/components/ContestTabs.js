@@ -276,11 +276,10 @@ export default function ContestTabs({ contest, leaderboard, handleSwap }) {
               </tr>
               {contest
                 && contest.prizeDetails.map((p, index) => (
-                  <tr>
+                  <tr key={index}>
                     <td>{index + 1}</td>
                     <td>
-                      ₹
-                      {p.prize}
+                      {p.prize/10000} ETH
                     </td>
                   </tr>
                 ))}

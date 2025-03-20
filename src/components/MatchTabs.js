@@ -429,13 +429,11 @@ export default function MatchTabs({ tabs, g, livescore }) {
                           <p>Entry</p>
                         </First>
                         <First>
-                          <h1>{tab.price}</h1>
+                          <h1>{tab.price/10000} ETH</h1>
                           <First>
-                            <del>₹ 19</del>
+                            <del>0.01 ETH</del>
                             <FreeButton onClick={(e) => handleOpen(e, tab)}>
-                              ₹
-                              {' '}
-                              {Math.floor(tab.price / tab.totalSpots)}
+                              {tab.price / (tab.totalSpots*10000)} ETH
                             </FreeButton>
                           </First>
                         </First>
@@ -461,14 +459,12 @@ export default function MatchTabs({ tabs, g, livescore }) {
                         </First>
                       </Contest>
                       <Last>
-                        ₹
-                        {Math.floor(tab.price / tab.totalSpots)}
+                        {(tab.price / (tab.totalSpots*10000))} ETH
                         <EmojiEventsOutlinedIcon
                           style={{ margin: '0 15px', marginBottom: '3px' }}
                         />
                         {Math.floor((tab.numWinners / tab.totalSpots) * 100)}
-                        %
-                        Single
+                        % Single
                       </Last>
                     </ContestContainer>
                   </Grid>
@@ -508,8 +504,7 @@ export default function MatchTabs({ tabs, g, livescore }) {
                         <First>
                           <div>
                             <p>Prize Pool</p>
-                            ₹
-                            {tab?.contest?.price}
+                            {tab?.contest?.price/10000} ETH
                           </div>
                           <div>
                             <p>spots</p>
@@ -517,12 +512,7 @@ export default function MatchTabs({ tabs, g, livescore }) {
                           </div>
                           <div>
                             <p>Entry</p>
-                            <p>
-                              ₹
-                              {Math.floor(
-                                tab?.contest?.price / tab?.contest?.totalSpots,
-                              )}
-                            </p>
+                            <p>{Math.floor(tab?.contest?.price / (tab?.contest?.totalSpots*10000))} ETH</p>
                           </div>
                           {matchlive?.result == 'Complet' && (
                             <h5
@@ -533,8 +523,8 @@ export default function MatchTabs({ tabs, g, livescore }) {
                             >
                               u won
                               {' '}
-                              {tab?.team?.won}
-                              rs!
+                              {tab?.team?.won/10000}
+                              {" "}eth!
                             </h5>
                           )}
                         </First>
@@ -542,9 +532,7 @@ export default function MatchTabs({ tabs, g, livescore }) {
                       <LastJ>
                         <div>
                           <p style={{ display: 'flex', alignItems: 'center' }}>
-                            <F>1st</F>
-                            {' '}
-                            {tab.contest.prizeDetails[0].prize}
+                            <F>1st</F> {tab?.contest?.prizeDetails?.[0]?.prize/10000} ETH
                           </p>
                         </div>
                         <First>
@@ -569,8 +557,8 @@ export default function MatchTabs({ tabs, g, livescore }) {
                                   fontSize: '12px',
                                 }}
                               >
-                                you won ₹
-                                {t.won}
+                                you won ETH {" "}
+                                {t.won/10000}
                               </p>
                             ) : (
                               <p

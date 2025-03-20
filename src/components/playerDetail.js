@@ -228,7 +228,7 @@ export function PlayerDetail() {
           `${URL}/playerSeriesDetails/${id}/${seriesSelected}`,
         );
         setLoading(false)
-        if (data.data.player.length > 0) {
+        if (data?.data?.player?.length > 0) {
           setSeriesDetails([...data.data.player]);
           setMainInfo(data.data.maininfo);
         }

@@ -128,7 +128,7 @@ const Last = styled.div`
 const tabs = [{ label: 'winnings' }, { label: 'leaderboard' }];
 
 export function ContestDetail({ contest, handleClick }) {
-  console.log(contest,'contest')
+  console.log(contest, 'contest')
   return (
     <ContestsContainer container>
       {contest && (
@@ -139,13 +139,11 @@ export function ContestDetail({ contest, handleClick }) {
               <p>Entry</p>
             </First>
             <First>
-              <h1>{contest.price}</h1>
+              <h1>{contest.price/10000} ETH</h1>
               <First>
-                <del>₹ 19</del>
+                <del>0.01 ETH</del>
                 <FreeButton>
-                  ₹
-                  {' '}
-                  {Math.floor(contest.price / contest.totalSpots)}
+                  {(contest.price / (contest.totalSpots * 10000))} ETH
                 </FreeButton>
               </First>
             </First>
@@ -170,17 +168,15 @@ export function ContestDetail({ contest, handleClick }) {
             </First>
             <First>
               <JoinButton onClick={() => handleClick()}>
-                <del>₹ 190</del>
+                <del>0.01 ETH</del>
                 join
-                ₹
                 {' '}
-                {Math.floor(contest.price / contest.totalSpots)}
+                {(contest.price / (contest.totalSpots * 10000))} ETH
               </JoinButton>
             </First>
           </Contest>
           <Last>
-            ₹
-            {Math.floor(contest.price / contest.totalSpots)}
+            {Math.floor(contest.price / contest.totalSpots * 10000)} ETH
             <EmojiEventsOutlinedIcon
               style={{ margin: '0 15px', marginBottom: '3px' }}
             />

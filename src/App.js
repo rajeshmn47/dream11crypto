@@ -39,7 +39,10 @@ import TransactionTabs from './components/transaction';
 import PlayerDetail from './components/playerDetail';
 import SeriesDetails from './components/seriesdetails';
 import MatchAnalysis from './components/analytics/matchAnalysis';
-import Bowler from './components/Bowler'
+import Bowler from './components/Bowler';
+import MetaMaskIntegration from './components/MetaMaskIntegration';
+
+const contractAddress = "0x462A2aCb9128734770A3bd3271276966ad6fc22C";
 
 function App() {
   const dispatch = useDispatch();
@@ -123,6 +126,7 @@ function App() {
           <Route path="/player/:id" element={<PlayerDetail/>} />
           <Route path="/series/:name" element={<SeriesDetails/>} />
           <Route path="/bowler" element={<Bowler/>} />
+          <Route path="/meta" element={<MetaMaskIntegration/>} />
         </Routes>
       </BrowserRouter>
       {confetti && (

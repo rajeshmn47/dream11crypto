@@ -77,7 +77,7 @@ export default function ConfirmModal({
   const join = async () => {
     try {
       const data = await API.get(
-        `${URL}/joincontest/${modal._id}?teamid=${teamid}`,
+        `${URL}/cryptocontest/joincontest/${modal._id}?teamid=${teamid}`,
       );
       alert.success('joined contest successfully');
       loadjoined();
