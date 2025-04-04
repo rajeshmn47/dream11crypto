@@ -158,7 +158,7 @@ export function Navbar({ home }) {
         <DeatilTop>
           <p>total balance</p>
           <h5>
-            eth {" "} 
+            DBC {" "} 
             {user && user.cryptoWallet}
           </h5>
         </DeatilTop>
@@ -174,7 +174,7 @@ export function Navbar({ home }) {
         <Deatil>
           <p>Amount added</p>
           <h5>
-            eth  {" "} 
+            DBC  {" "} 
             {user?.totalAmountAdded}
           </h5>
         </Deatil>
@@ -183,7 +183,7 @@ export function Navbar({ home }) {
             <Grid item sm={7} xs={7}>
               <p>winnings</p>
               <h5>
-                eth {" "} 
+                DBC {" "} 
                 {user?.totalAmountWon/10000}
               </h5>
             </Grid>
@@ -202,7 +202,7 @@ export function Navbar({ home }) {
         </Deatil>
         <Deatil>
           <p>cash bonus</p>
-          <h5>eth 0</h5>
+          <h5>DBC 0</h5>
         </Deatil>
       </Drawer>
       {home && (

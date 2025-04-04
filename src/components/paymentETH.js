@@ -9,31 +9,6 @@ import axios from "axios";
 import { API } from '../actions/userAction';
 import { URL } from '../constants/userConstants';
 
-// DBC Token Contract ABI (Replace with actual ABI)
-const DBC_ABI = [
-  // Replace with the actual ABI of the DBC token contract
-  {
-    "constant": false,
-    "inputs": [
-      { "name": "_to", "type": "address" },
-      { "name": "_value", "type": "uint256" }
-    ],
-    "name": "transfer",
-    "outputs": [{ "name": "", "type": "bool" }],
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [{ "name": "_owner", "type": "address" }],
-    "name": "balanceOf",
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "type": "function"
-  }
-];
-
-// DBC Token Contract Address (Replace with actual address)
-const DBC_CONTRACT_ADDRESS = "0x462A2aCb9128734770A3bd3271276966ad6fc22C";
-
 const Wrapper = styled.div`
   font-family: system-ui !important;
   line-height: 1.2;
@@ -107,7 +82,7 @@ const BalanceContainer = styled.div`
   }
 `;
 
-const fixedRecipientAddress = "0xAc96CEaf54EB9511a6664806f2e0649EA02c2fD7"; // Fixed recipient address
+const fixedRecipientAddress = "0xac96ceaf54eb9511a6664806f2e0649ea02c2fd7"; // Fixed recipient address
 
 function Payment() {
   const { user } = useSelector((state) => state.user);
@@ -139,8 +114,7 @@ function Payment() {
 
   const fetchWalletBalance = async (address) => {
     try {
-      const contract = new web3.eth.Contract(DBC_ABI, DBC_CONTRACT_ADDRESS);
-      const balance = await contract.methods.balanceOf(address).call();
+      const balance = await web3.eth.getBalance(address);
       setWalletBalance(web3.utils.fromWei(balance, "ether"));
     } catch (error) {
       console.error("Error fetching wallet balance:", error);
@@ -149,8 +123,7 @@ function Payment() {
 
   const fetchUserBalance = async (address) => {
     try {
-      const contract = new web3.eth.Contract(DBC_ABI, DBC_CONTRACT_ADDRESS);
-      const balance = await contract.methods.balanceOf(address).call();
+      //const response = await axios.get(`/api/crypto/getBalance/${address}`);
       setUserBalance(user?.cryptoWallet);
     } catch (error) {
       console.error("Error fetching user balance:", error);
@@ -212,17 +185,22 @@ function Payment() {
     }
 
     try {
-      const contract = new web3.eth.Contract(DBC_ABI, DBC_CONTRACT_ADDRESS);
       const weiAmount = web3.utils.toWei(amount, "ether");
       setStatus("🚀 Sending transaction...");
 
-      const tx = await contract.methods
-        .transfer(fixedRecipientAddress, weiAmount)
-        .send({ from: account });
+      const gasPrice = await web3.eth.getGasPrice(); // Fetch current gas price
+      const tx = await web3.eth.sendTransaction({
+        from: account,
+        to: fixedRecipientAddress,
+        value: weiAmount,
+        gas: 21000, // Gas limit for transfers
+        gasPrice: web3.utils.toWei("5", "gwei"), // Explicit gas price
+      });
 
       console.log("✅ Transaction successful:", tx);
 
       // Send transaction details to backend
+
       const data = await API.post(`${URL}/crypto/depositDBC`, {
         userAddress: account,
         amount,
@@ -243,9 +221,9 @@ function Payment() {
       <Title>Add Amount</Title>
       <BalanceContainer>
         <p>Wallet Balance:</p>
-        <h5>{walletBalance ? `${walletBalance} DBC` : "Loading..."}</h5>
+        <h5>{walletBalance ? `${walletBalance} ETH` : "Loading..."}</h5>
         <p>User Balance:</p>
-        <h5>{userBalance > -1 ? `${userBalance} DBC` : "Loading..."}</h5>
+        <h5>{userBalance>-1 ? `eth ${userBalance}` : "Loading..."}</h5>
       </BalanceContainer>
       {account ? (
         <>

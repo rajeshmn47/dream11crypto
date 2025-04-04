@@ -395,7 +395,7 @@ export default function MatchTabs({ tabs, g, livescore }) {
               allowScrollButtonsMobile
               aria-label="scrollable force tabs example"
             >
-              <Tab label="Contests" {...a11yProps(0)} />
+              {matchlive?.result == 'Complete' ? null : <Tab label="Contests" {...a11yProps(0)} />}
               <Tab
                 label={`My Contests(${contest && contest.length})`}
                 {...a11yProps(1)}
@@ -429,11 +429,11 @@ export default function MatchTabs({ tabs, g, livescore }) {
                           <p>Entry</p>
                         </First>
                         <First>
-                          <h1>{tab.price/10000} ETH</h1>
+                          <h1>{tab.price / 10} DBC</h1>
                           <First>
-                            <del>0.01 ETH</del>
+                            <del>0.01 DBC</del>
                             <FreeButton onClick={(e) => handleOpen(e, tab)}>
-                              {tab.price / (tab.totalSpots*10000)} ETH
+                              {tab.price / (tab.totalSpots * 10)} DBC
                             </FreeButton>
                           </First>
                         </First>
@@ -459,7 +459,7 @@ export default function MatchTabs({ tabs, g, livescore }) {
                         </First>
                       </Contest>
                       <Last>
-                        {(tab.price / (tab.totalSpots*10000))} ETH
+                        {(tab.price / (tab.totalSpots * 10))} DBC
                         <EmojiEventsOutlinedIcon
                           style={{ margin: '0 15px', marginBottom: '3px' }}
                         />
@@ -504,7 +504,7 @@ export default function MatchTabs({ tabs, g, livescore }) {
                         <First>
                           <div>
                             <p>Prize Pool</p>
-                            {tab?.contest?.price/10000} ETH
+                            {tab?.contest?.price / 10} DBC
                           </div>
                           <div>
                             <p>spots</p>
@@ -512,7 +512,7 @@ export default function MatchTabs({ tabs, g, livescore }) {
                           </div>
                           <div>
                             <p>Entry</p>
-                            <p>{Math.floor(tab?.contest?.price / (tab?.contest?.totalSpots*10000))} ETH</p>
+                            <p>{Math.floor(tab?.contest?.price / (tab?.contest?.totalSpots * 10))} DBC</p>
                           </div>
                           {matchlive?.result == 'Complet' && (
                             <h5
@@ -523,8 +523,8 @@ export default function MatchTabs({ tabs, g, livescore }) {
                             >
                               u won
                               {' '}
-                              {tab?.team?.won/10000}
-                              {" "}eth!
+                              {tab?.team?.won / 10}
+                              {" "}DBC!
                             </h5>
                           )}
                         </First>
@@ -532,7 +532,7 @@ export default function MatchTabs({ tabs, g, livescore }) {
                       <LastJ>
                         <div>
                           <p style={{ display: 'flex', alignItems: 'center' }}>
-                            <F>1st</F> {tab?.contest?.prizeDetails?.[0]?.prize/10000} ETH
+                            <F>1st</F> {tab?.contest?.prizeDetails?.[0]?.prize / 10} DBC
                           </p>
                         </div>
                         <First>
@@ -557,8 +557,8 @@ export default function MatchTabs({ tabs, g, livescore }) {
                                   fontSize: '12px',
                                 }}
                               >
-                                you won ETH {" "}
-                                {t.won/10000}
+                                you won DBC {" "}
+                                {t.won / 10}
                               </p>
                             ) : (
                               <p

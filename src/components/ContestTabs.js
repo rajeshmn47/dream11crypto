@@ -279,7 +279,7 @@ export default function ContestTabs({ contest, leaderboard, handleSwap }) {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>
-                      {p.prize/10000} ETH
+                      {p.prize/10000} DBC
                     </td>
                   </tr>
                 ))}
