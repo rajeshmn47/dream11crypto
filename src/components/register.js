@@ -80,7 +80,7 @@ export function Register() {
   const onSubmit = async (formData) => {
     setEmail(formData.email);
     try {
-      const data = await axios.post(`${URL}/auth/register`, formData);
+      const data = await axios.post(`${URL}/auth/registerold`, formData);
       if (data.data.success) {
         setSuccess(data.data.message);
         alert.success(data.data.message);
