@@ -90,7 +90,7 @@ export function Register() {
         setErr(data.data.message);
       }
     } catch (e) {
-      alert.error('Something went wrong!');
+      alert.error(e.response.data.message);
     }
   };
 
@@ -103,7 +103,7 @@ export function Register() {
       alert.success(data.data.message);
     } catch (e) {
       alert.error('Invalid OTP!');
-      console.log(e.response.data.message,'e')
+      console.log(e.response.data.message, 'e')
       setErr(e.response.data.message)
     }
   };

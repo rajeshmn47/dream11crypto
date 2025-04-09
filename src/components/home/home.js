@@ -180,7 +180,7 @@ export function Home() {
     <>
       <Navbar home />
       <div className="homecontainer">
-        <CricketBg id="section1">
+        {past?.length > 0 && <CricketBg id="section1">
           <TopDiv>
             <h3 style={{ color: '#FFFFFF', position: 'relative', whiteSpace: 'nowrap' }}>
               My Matches
@@ -354,9 +354,9 @@ export function Home() {
               ),
             )
           ) : (
-            <div className="notfound">No results found :(</div>
+            <div className=""></div>
           )}
-        </CricketBg>
+        </CricketBg>}
         {live?.length > 0 && (
           <div className="matches">
             <h3>Live Matches</h3>
