@@ -125,9 +125,9 @@ export default function ConfirmModal({
           </FlexBox>
 
           <Para>
-            By joining this contest, you accept Dream11 T&C's and confirm that
+            By joining this contest, you accept Dreambet11 T&C's and confirm that
             you are not resident of Andhra Pradesh, Assam, Nagaland, Odisha,
-            Sikkim or Telangana. I also agree to be contacted by Dream11 and
+            Sikkim or Telangana. I also agree to be contacted by Dreambet11 and
             their partners.
           </Para>
           <JoinButton onClick={() => join()}>join contest</JoinButton>

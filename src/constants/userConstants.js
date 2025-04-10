@@ -59,9 +59,9 @@ function geturl() {
     // return "http://dream-env.eba-6d6ds7up.us-east-1.elasticbeanstalk.com";
     // return "https://backendforpuand-dream11.onrender.com";
     // return 'https://apk.thepowerplay.co';
-    // return 'http://localhost:8000';
+    return 'http://localhost:8000';
     // return "http://46.28.44.4:8000"
-     return 'https://backend.dreambet11.io';
+    // return 'https://backend.dreambet11.io';
   }
   // return "https://dreamelevenclonebackend-7l34.onrender.com";
   // return "https://dreamelevenclonebackend-1v8e.onrender.com";

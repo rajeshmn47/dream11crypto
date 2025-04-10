@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { WhatsAppWidget } from 'react-whatsapp-widget';
 
-import { loadUser } from './actions/userAction';
+import { API, loadUser } from './actions/userAction';
 import Admin from './components/admin/Admin';
 import Completed from './components/completed';
 import ContestDetail from './components/contestdetail';
@@ -41,6 +41,8 @@ import SeriesDetails from './components/seriesdetails';
 import MatchAnalysis from './components/analytics/matchAnalysis';
 import Bowler from './components/Bowler';
 import MetaMaskIntegration from './components/MetaMaskIntegration';
+import { onMessageListener, requestNotificationPermission } from './firebase';
+import { URL } from './constants/userConstants';
 
 const contractAddress = "0x462A2aCb9128734770A3bd3271276966ad6fc22C";
 
@@ -70,6 +72,7 @@ function App() {
       window.removeEventListener('resize', showAnimation);
     };
   }, [dimensions]);
+
   const TRACKING_ID = 'G-YWB7BCRZML';
   ReactGA.initialize(TRACKING_ID);
   const {
@@ -77,12 +80,39 @@ function App() {
   } = useSelector(
     (state) => state.user,
   );
+
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
+
+    useEffect(() => {
+      // Request notification permission on app load
+      const getTokenAndSave = async () => {
+        const token = await requestNotificationPermission();
+        if (token && user?._id) {
+          console.log('FCM Token:', token);
+          // Save the token to your backend
+          await API.post(`${URL}/auth/save-token`,
+            {
+              userId: user?._id, // Replace with actual user ID
+              token,
+            },
+          );
+        }
+      }
+      getTokenAndSave();
+      // Listen for foreground messages
+      onMessageListener()
+        .then((payload) => {
+          console.log('Message received: ', payload);
+          toast.info(`Notification: ${payload.notification.title}`);
+        })
+        .catch((err) => console.error('Failed to receive message: ', err));
+    }, [user]);
+
   const checkUserToken = () => {
     const userToken = localStorage.getItem('user-token');
     if (!userToken || userToken === 'undefined') {

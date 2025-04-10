@@ -119,6 +119,9 @@ function Payment() {
   const [walletBalance, setWalletBalance] = useState(null);
   const [userBalance, setUserBalance] = useState(null);
   const [status, setStatus] = useState("");
+  const [withdrawAmount, setWithdrawAmount] = useState("");
+  const [withdrawAddress, setWithdrawAddress] = useState("");
+  const [withdrawStatus, setWithdrawStatus] = useState("");
 
   useEffect(() => {
     const init = async () => {
@@ -149,8 +152,8 @@ function Payment() {
 
   const fetchUserBalance = async (address) => {
     try {
-      const contract = new web3.eth.Contract(DBC_ABI, DBC_CONTRACT_ADDRESS);
-      const balance = await contract.methods.balanceOf(address).call();
+      //const contract = new web3.eth.Contract(DBC_ABI, DBC_CONTRACT_ADDRESS);
+      //const balance = await contract.methods.balanceOf(address).call();
       setUserBalance(user?.cryptoWallet);
     } catch (error) {
       console.error("Error fetching user balance:", error);
@@ -238,6 +241,36 @@ function Payment() {
     }
   };
 
+  const handleWithdraw = async (e) => {
+    e.preventDefault();
+    if (!account || !withdrawAmount || !withdrawAddress) {
+      return alert("Enter amount and recipient address!");
+    }
+
+    try {
+      setWithdrawStatus("🚀 Sending withdrawal request...");
+
+      // Send withdrawal request to backend
+      const response = await API.post(`${URL}/crypto/withdraw-crypto`, {
+        amount: withdrawAmount,
+        recipient: withdrawAddress,
+      });
+
+      if (response.status === 200) {
+        console.log("✅ Withdrawal request successful:", response.data);
+        setWithdrawStatus("✅ Withdrawal successful!");
+        fetchWalletBalance(account); // Update wallet balance
+        fetchUserBalance(account); // Update user balance
+      } else {
+        console.error("❌ Withdrawal request failed:", response.data);
+        setWithdrawStatus("❌ Withdrawal failed. Check console for details.");
+      }
+    } catch (error) {
+      console.error("❌ Withdrawal request failed:", error);
+      setWithdrawStatus("❌ Withdrawal failed. Check console for details.");
+    }
+  };
+
   return (
     <Container>
       <Title>Add Amount</Title>
@@ -259,6 +292,22 @@ function Payment() {
             Deposit
           </button>
           <p>{status}</p>
+          <TextField
+            value={withdrawAmount}
+            onChange={(e) => setWithdrawAmount(e.target.value)}
+            placeholder="Amount to withdraw"
+            size="small"
+          />
+          <TextField
+            value={withdrawAddress}
+            onChange={(e) => setWithdrawAddress(e.target.value)}
+            placeholder="Recipient address"
+            size="small"
+          />
+          <button className="paybtn" onClick={handleWithdraw}>
+            Withdraw
+          </button>
+          <p>{withdrawStatus}</p>
         </>
       ) : (
         <button className="paybtn" onClick={connectWallet}>

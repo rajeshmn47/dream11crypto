@@ -73,7 +73,7 @@ export function ForgotPassword() {
     <>
       <div className="logintopbar">
         <EmojiEventsOutlinedIcon style={{ marginRight: '1vw' }} />
-        Dream 11
+        Dreambet 11
       </div>
       {!open ? (
         <div className="login">
