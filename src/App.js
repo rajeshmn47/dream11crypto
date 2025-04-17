@@ -43,6 +43,7 @@ import Bowler from './components/Bowler';
 import MetaMaskIntegration from './components/MetaMaskIntegration';
 import { onMessageListener, requestNotificationPermission } from './firebase';
 import { URL } from './constants/userConstants';
+import LoginGitHub from './components/githublogin';
 
 const contractAddress = "0x462A2aCb9128734770A3bd3271276966ad6fc22C";
 
@@ -88,30 +89,30 @@ function App() {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
-    useEffect(() => {
-      // Request notification permission on app load
-      const getTokenAndSave = async () => {
-        const token = await requestNotificationPermission();
-        if (token && user?._id) {
-          console.log('FCM Token:', token);
-          // Save the token to your backend
-          await API.post(`${URL}/auth/save-token`,
-            {
-              userId: user?._id, // Replace with actual user ID
-              token,
-            },
-          );
-        }
+  useEffect(() => {
+    // Request notification permission on app load
+    const getTokenAndSave = async () => {
+      const token = await requestNotificationPermission();
+      if (token && user?._id) {
+        console.log('FCM Token:', token);
+        // Save the token to your backend
+        await API.post(`${URL}/auth/save-token`,
+          {
+            userId: user?._id, // Replace with actual user ID
+            token,
+          },
+        );
       }
-      getTokenAndSave();
-      // Listen for foreground messages
-      onMessageListener()
-        .then((payload) => {
-          console.log('Message received: ', payload);
-          toast.info(`Notification: ${payload.notification.title}`);
-        })
-        .catch((err) => console.error('Failed to receive message: ', err));
-    }, [user]);
+    }
+    getTokenAndSave();
+    // Listen for foreground messages
+    onMessageListener()
+      .then((payload) => {
+        console.log('Message received: ', payload);
+        toast.info(`Notification: ${payload.notification.title}`);
+      })
+      .catch((err) => console.error('Failed to receive message: ', err));
+  }, [user]);
 
   const checkUserToken = () => {
     const userToken = localStorage.getItem('user-token');
@@ -141,6 +142,7 @@ function App() {
           <Route path="/counter" element={<Counter />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/googlelogin" element={<Logingoogle />} />
+          <Route path="/githublogin" element={<LoginGitHub />} />
           <Route path="/newusers" element={<NewUsers />} />
           <Route path="/findpeople" element={<FindPeople />} />
           <Route path="/my-info" element={<MyInfo />} />
@@ -153,10 +155,10 @@ function App() {
           <Route path="/helpAndSupport" element={<HelpAndSupport />} />
           <Route path="/more" element={<More />} />
           <Route path="/donate" element={<Donate />} />
-          <Route path="/player/:id" element={<PlayerDetail/>} />
-          <Route path="/series/:name" element={<SeriesDetails/>} />
-          <Route path="/bowler" element={<Bowler/>} />
-          <Route path="/meta" element={<MetaMaskIntegration/>} />
+          <Route path="/player/:id" element={<PlayerDetail />} />
+          <Route path="/series/:name" element={<SeriesDetails />} />
+          <Route path="/bowler" element={<Bowler />} />
+          <Route path="/meta" element={<MetaMaskIntegration />} />
         </Routes>
       </BrowserRouter>
       {confetti && (

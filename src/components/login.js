@@ -37,6 +37,12 @@ export function Login() {
     dispatch(login(formdata));
   };
 
+  const handleGithubLogin = async () => {
+    const clientId = "Ov23lid4UMXyeoT0VoYw";
+    const redirectUri = "https://dream11bet.vercel.app/githublogin";
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user`;
+  }
+
   return (
     <>
       {/* Header */}
@@ -55,8 +61,9 @@ export function Login() {
             <Button
               variant="contained"
               //disabled={true}
-              className="social-btn github"
-              onClick={() => alert('Not working yet, only Google login is available')}
+              className="social-btn"
+              //onClick={() => alert('Not working yet, only Google login is available')}
+              onClick={() => handleGithubLogin()}
             >
               <img src="./github.svg" alt="Github" className="social-icon" />
               Github
